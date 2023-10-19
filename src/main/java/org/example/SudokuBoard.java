@@ -13,7 +13,7 @@ public class SudokuBoard {
 
     public int[][] getBoard() {
         int[][] secondBoard = new int[9][9];
-        for (int i = 0; i < 9; i++) {
+        for(int i =0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 secondBoard[i][j] = board[i][j];
             }
@@ -24,7 +24,7 @@ public class SudokuBoard {
     private boolean createBoard(int row, int col) {
         if (row == 9) {                          //end of board - all cells filled with numbers
             return true;
-        } else if (col == 9) {                  //end of current column
+        } else if (col == 9) {                  //end of current row
             return createBoard(row + 1, 0);
         } else if (board[row][col] != 0) {      //cell was not empty - skipping
             return createBoard(row, col + 1);

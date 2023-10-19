@@ -2,6 +2,7 @@ package org.example;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,25 +14,40 @@ class SudokuBoardTest {
     @Test
     void checkRows() {
         sudoku.fillBoard();
-        int currentNumber = 0;
+        byte valueCounter = 0;
         int[][] board = sudoku.getBoard();
         for (int i = 0; i < 9; i++) {
-            currentNumber = board[i][0];
-            for (int j = 1; j < 9; j++) {
-                assertNotEquals(board[i][j], currentNumber);
+            for (int j = 0; j < 9; j++) {
+                valueCounter = 0;
+                for (int z = 0; z < 9; z += 1) {
+                    if (board[i][j] == board[i][z]) {
+                        valueCounter += 1;
+                    }
+                    assertFalse(valueCounter > 1);
+
+                }
             }
         }
     }
+
 
     @Test
     void checkColumns() {
         sudoku.fillBoard();
         int currentNumber = 0;
+        byte valueCounter = 0;
         int[][] board = sudoku.getBoard();
         for (int i = 0; i < 9; i++) {
             currentNumber = board[0][i];
             for (int j = 1; j < 9; j++) {
-                assertNotEquals(board[j][i], currentNumber);
+                valueCounter = 0;
+                for (int z = 0; z < 9; z += 1) {
+                    if (board[j][i] == board[z][i]) {
+                        valueCounter += 1;
+                    }
+                    assertFalse(valueCounter > 1);
+
+                }
             }
         }
     }
