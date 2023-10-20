@@ -1,4 +1,4 @@
-package org.example;
+package org.example.models;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,7 +13,7 @@ public class SudokuBoard {
 
     public int[][] getBoard() {
         int[][] secondBoard = new int[9][9];
-        for(int i =0; i < 9; i++) {
+        for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 secondBoard[i][j] = board[i][j];
             }

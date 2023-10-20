@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.models.SudokuBoard;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ class SudokuBoardTest {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 valueCounter = 0;
-                for (int z = 0; z < 9; z += 1) {
+                for (int z = 0; z < 9; z++) {
                     if (board[i][j] == board[i][z]) {
                         valueCounter += 1;
                     }
@@ -34,11 +35,9 @@ class SudokuBoardTest {
     @Test
     void checkColumns() {
         sudoku.fillBoard();
-        int currentNumber = 0;
         byte valueCounter = 0;
         int[][] board = sudoku.getBoard();
         for (int i = 0; i < 9; i++) {
-            currentNumber = board[0][i];
             for (int j = 1; j < 9; j++) {
                 valueCounter = 0;
                 for (int z = 0; z < 9; z += 1) {

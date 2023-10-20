@@ -14,6 +14,21 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <developers>
+        <developer>
+             <id>ppolakowski</id>
+            <name>Piotr Polakowski</name>
+            <email>247768@edu.p.lodz.pl</email>
+        </developer>
+        <developer>
+             <id>jsamek</id>
+            <name>Jakub Samek</name>
+            <email>247781@edu.p.lodz.pl</email>
+        </developer>
+    </developers>
+
+    <description>Projekt grupy laboratoryjnej JM_CZ_1345_06</description>
+
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -85,6 +100,16 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>4.0.0-M8</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jxr-plugin</artifactId>
+                <version>3.3.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.21.0</version>
             </plugin>
         </plugins>
     </build>
