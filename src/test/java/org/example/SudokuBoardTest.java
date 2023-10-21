@@ -1,22 +1,52 @@
 package org.example;
 
+import org.example.interfaces.SudokuSolver;
 import org.example.models.SudokuBoard;
+import org.example.solvers.BacktrackingSudokuSolver;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class SudokuBoardTest {
 
-    SudokuBoard sudoku = new SudokuBoard();
+    SudokuSolver sudokuSolver = new BacktrackingSudokuSolver();
+    SudokuBoard sudoku = new SudokuBoard(sudokuSolver);
+    byte valueCounter = 0;
+    int[][] board = sudoku.getBoard();
+
+    //Checking rows, columns, number integrity and squares of THE SAME BOARD
+    @Test
+    void complexBoardTest() {
+        sudoku.solveGame();
+        int[][] board = sudoku.getBoard();
+        checkRows(board);
+        checkCols(board);
+        checkNumersIntegrity(board);
+        squareCheck(board);
+    }
 
     @Test
-    void checkRows() {
-        sudoku.fillBoard();
-        byte valueCounter = 0;
+    void checkIsBoardGeneratedRandomly() {
+        sudoku.solveGame();
         int[][] board = sudoku.getBoard();
+        sudoku.solveGame();
+        int[][] secondBoard = sudoku.getBoard();
+        assertFalse(Arrays.deepEquals(board, secondBoard), "Boards are not unique");
+    }
+
+    void squareCheck(int[][] board) {
+        int currentValue = 0;
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                currentValue = board[i][j];
+                assertTrue(validateSquare(i, j, currentValue, board), "Square error");
+            }
+        }
+    }
+
+    void checkRows(int[][] board) {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 valueCounter = 0;
@@ -24,62 +54,32 @@ class SudokuBoardTest {
                     if (board[i][j] == board[i][z]) {
                         valueCounter += 1;
                     }
-                    assertFalse(valueCounter > 1);
+                    assertFalse(valueCounter > 1, "Row error");
 
                 }
             }
         }
     }
 
-
-    @Test
-    void checkColumns() {
-        sudoku.fillBoard();
-        byte valueCounter = 0;
-        int[][] board = sudoku.getBoard();
-        for (int i = 0; i < 9; i++) {
+    void checkCols(int[][] board) {
+           for (int i = 0; i < 9; i++) {
             for (int j = 1; j < 9; j++) {
                 valueCounter = 0;
                 for (int z = 0; z < 9; z += 1) {
                     if (board[j][i] == board[z][i]) {
                         valueCounter += 1;
                     }
-                    assertFalse(valueCounter > 1);
+                    assertFalse(valueCounter > 1, "Column error");
 
                 }
             }
         }
     }
 
-    @Test
-    void checkNumbersIntegrity() {
-        sudoku.fillBoard();
-        int[][] board = sudoku.getBoard();
+    void checkNumersIntegrity(int[][] board) {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                assertFalse(board[i][j] > 9 || board[i][j] < 1);
-            }
-        }
-    }
-
-    @Test
-    void checkIsBoardGeneratedRandomly() {
-        sudoku.fillBoard();
-        int[][] board = sudoku.getBoard();
-        sudoku.fillBoard();
-        int[][] secondBoard = sudoku.getBoard();
-        assertFalse(Arrays.deepEquals(board, secondBoard));
-    }
-
-    @Test
-    void squareCheck() {
-        sudoku.fillBoard();
-        int[][] board = sudoku.getBoard();
-        int currentValue = 0;
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                currentValue = board[i][j];
-                assertTrue(validateSquare(i, j, currentValue, board));
+                assertFalse(board[i][j] > 9 || board[i][j] < 1, "Number integrity error");
             }
         }
     }
