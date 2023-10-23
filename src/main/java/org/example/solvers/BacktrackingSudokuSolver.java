@@ -1,8 +1,9 @@
 package org.example.solvers;
 
+import org.example.interfaces.SudokuSolver;
+
 import java.util.ArrayList;
 import java.util.Collections;
-import org.example.interfaces.SudokuSolver;
 
 public class BacktrackingSudokuSolver implements SudokuSolver {
 
@@ -15,6 +16,7 @@ public class BacktrackingSudokuSolver implements SudokuSolver {
         }
         solveBoard(0, 0, board);
     }
+
     private boolean solveBoard(int row, int col, int[][] board) {
         if (row == 9) {                          //end of board - all cells filled with numbers
             return true;
@@ -40,6 +42,7 @@ public class BacktrackingSudokuSolver implements SudokuSolver {
             return false;
         }
     }
+
     private int[][] setSquareCoordinates(int minRow, int maxRow, int minCol, int maxCol) {
         int[][] squareCoordinates = new int[9][2];
         int i = 0;
@@ -86,5 +89,4 @@ public class BacktrackingSudokuSolver implements SudokuSolver {
         }
     return true;
     }
-
 }

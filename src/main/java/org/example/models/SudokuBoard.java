@@ -1,8 +1,8 @@
 package org.example.models;
 
-import java.util.Arrays;
-
 import org.example.interfaces.SudokuSolver;
+
+import java.util.Arrays;
 
 public class SudokuBoard {
     private int[][] board;
@@ -27,7 +27,7 @@ public class SudokuBoard {
     }
 
     public void setValue(int row, int col, int value) {
-
+        board[row][col] = value;
     }
 
     public int getValue(int row, int col) {

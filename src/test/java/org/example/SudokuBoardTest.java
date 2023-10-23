@@ -6,6 +6,7 @@ import org.example.solvers.BacktrackingSudokuSolver;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,7 +15,6 @@ class SudokuBoardTest {
     SudokuSolver sudokuSolver = new BacktrackingSudokuSolver();
     SudokuBoard sudoku = new SudokuBoard(sudokuSolver);
     byte valueCounter = 0;
-    int[][] board = sudoku.getBoard();
 
     //Checking rows, columns, number integrity and squares of THE SAME BOARD
     @Test
@@ -34,6 +34,22 @@ class SudokuBoardTest {
         sudoku.solveGame();
         int[][] secondBoard = sudoku.getBoard();
         assertFalse(Arrays.deepEquals(board, secondBoard), "Boards are not unique");
+    }
+
+    @Test
+    void checkValueSetter() {
+        sudoku.solveGame();
+        int exampleValue = ThreadLocalRandom.current().nextInt(1, 9);
+        sudoku.setValue(4, 4, exampleValue);
+        int[][] currentBoard = sudoku.getBoard();
+        assertEquals(currentBoard[4][4], exampleValue);
+    }
+
+    @Test
+    void checkValueGetter() {
+        sudoku.solveGame();
+        int[][] currentBoard = sudoku.getBoard();
+        assertEquals(currentBoard[7][3], sudoku.getValue(7, 3));
     }
 
     void squareCheck(int[][] board) {
