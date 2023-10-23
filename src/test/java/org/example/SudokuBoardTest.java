@@ -52,16 +52,6 @@ class SudokuBoardTest {
         assertEquals(currentBoard[7][3], sudoku.getValue(7, 3));
     }
 
-    void squareCheck(int[][] board) {
-        int currentValue = 0;
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                currentValue = board[i][j];
-                assertTrue(validateSquare(i, j, currentValue, board), "Square error");
-            }
-        }
-    }
-
     void checkRows(int[][] board) {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -100,49 +90,24 @@ class SudokuBoardTest {
         }
     }
 
-     boolean validateSquare(int row, int col, int value, int[][] board) {
-        int[][] squareCoordinates = new int[9][2];
-        if (col >= 0 && col <= 2 && row >= 0 && row <= 2) {
-            squareCoordinates = setSquareCoordinates(0, 2, 0, 2);
-        } else if (col >= 3 && col <= 5 && row >= 0 && row <= 2) {
-            squareCoordinates = setSquareCoordinates(0, 2, 3, 5);
-        } else if (col >= 6 && col <= 8 && row >= 0 && row <= 2) {
-            squareCoordinates = setSquareCoordinates(0, 2, 6, 8);
-        } else if (col >= 0 && col <= 2 && row >= 3 && row <= 5) {
-            squareCoordinates = setSquareCoordinates(3, 5, 0, 2);
-        } else if (col >= 3 && col <= 5 && row >= 3 && row <= 5) {
-            squareCoordinates = setSquareCoordinates(3, 5, 3, 5);
-        } else if (col >= 6 && col <= 8 && row >= 3 && row <= 5) {
-            squareCoordinates = setSquareCoordinates(3, 5, 6, 8);
-        } else if (col >= 0 && col <= 2 && row >= 6 && row <= 8) {
-            squareCoordinates = setSquareCoordinates(6, 8, 0, 2);
-        } else if (col >= 3 && col <= 5 && row >= 6 && row <= 8) {
-            squareCoordinates = setSquareCoordinates(6, 8, 3, 5);
-        } else if (col >= 6 && col <= 8 && row >= 6 && row <= 8) {
-            squareCoordinates = setSquareCoordinates(6, 8, 6, 8);
+    private void squareCheck(int[][] board) {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                assertTrue(validateSquare(i, j, board[i][j], board), "Square duplicate number error");
+            }
         }
-        byte valueCounter = 0;
-        for (int i = 0, j = 0; i < 9; i += 1) {
-            if ((board[squareCoordinates[i][j]][squareCoordinates[i][j + 1]] == value)) {
-                valueCounter++;
-                if (valueCounter > 1) {
-                    return false;
-                }
+    }
+
+    private boolean validateSquare(int row, int col, int value, int[][] board) {
+        int topLeftRow = row - (row % 3);
+        int topLeftCol = col - (col % 3);
+        int currentValue = 0;
+        for (int i = topLeftRow; i < topLeftRow + 3; i++) {
+            for (int j = topLeftCol; j < topLeftCol + 3; j++) {
+                if (currentValue > 1) return false; 
+                if (board[i][j] == value) currentValue++;
             }
         }
         return true;
-    }
-
-     int[][] setSquareCoordinates(int minRow, int maxRow, int minCol, int maxCol) {
-        int[][] squareCoordinates = new int[9][2];
-        int i = 0;
-        while (i < 9) {
-            for (int currRow = minRow, currCol = minCol; currRow <= maxRow; currRow += 1) {
-                squareCoordinates[i][0] = currRow;
-                squareCoordinates[i++][1] = currCol;
-            }
-            minCol += 1;
-        }
-        return squareCoordinates;
     }
 }
