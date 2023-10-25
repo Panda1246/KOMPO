@@ -22,8 +22,7 @@ public class SudokuBoard {
     }
 
     public void solveGame() {
-        sudokuSolver.solve(board);
-        //createBoard(0, 0);      //start from top left corner (0,0)
+        sudokuSolver.solve(this);
     }
 
     public void setValue(int row, int col, int value) {

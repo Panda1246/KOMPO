@@ -31,8 +31,8 @@ class SudokuBoardTest {
     void checkIsBoardGeneratedRandomly() {
         sudoku.solveGame();
         int[][] board = sudoku.getBoard();
-        sudoku.solveGame();
-        int[][] secondBoard = sudoku.getBoard();
+        SudokuBoard secondSudokuBoard = new SudokuBoard(sudokuSolver);
+        int[][] secondBoard = secondSudokuBoard.getBoard();
         assertFalse(Arrays.deepEquals(board, secondBoard), "Boards are not unique");
     }
 
