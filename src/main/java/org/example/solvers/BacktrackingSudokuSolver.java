@@ -18,7 +18,7 @@ public class BacktrackingSudokuSolver implements SudokuSolver {
             return true;
         } else if (col == 9) {                  //end of current row
             return solveBoard(row + 1, 0, sudokuBoard);
-        } else if (sudokuBoard.getValue(row, col) != 0) {      //cell was not empty - skipping
+        } else if (sudokuBoard.get(row, col) != 0) {      //cell was not empty - skipping
             return solveBoard(row, col + 1, sudokuBoard);
         } else {                                  //cell empty - ready to be filled
             ArrayList<Integer> valuesList = new ArrayList<>();
@@ -28,11 +28,11 @@ public class BacktrackingSudokuSolver implements SudokuSolver {
             Collections.shuffle(valuesList);    //then shuffle the numbers
             for (int i = 1; i < 10; i += 1) {
                 if (validateBoard(row, col, valuesList.get(i - 1), sudokuBoard)) {     //if number can be placed in cell
-                    sudokuBoard.setValue(row, col, valuesList.get(i - 1));              //put the number in cell
+                    sudokuBoard.set(row, col, valuesList.get(i - 1));              //put the number in cell
                     if (solveBoard(row, col + 1, sudokuBoard)) {      
                         return true;
                     }
-                    sudokuBoard.setValue(row, col, 0);         //any number cannot be inserted into the cell
+                    sudokuBoard.set(row, col, 0);         //any number cannot be inserted into the cell
                 }                               //return false and go "upper" - backtracking the right solution
             }
             return false;
@@ -42,7 +42,7 @@ public class BacktrackingSudokuSolver implements SudokuSolver {
     private boolean validateBoard(int row, int col, int value, SudokuBoard sudokuBoard) {
         //rows and columns check
         for (byte i = 0; i < 9; i += 1) {
-            if (sudokuBoard.getValue(row, i) == value || sudokuBoard.getValue(i, col) == value) {
+            if (sudokuBoard.get(row, i) == value || sudokuBoard.get(i, col) == value) {
                 return false;
             }
         }
@@ -53,7 +53,7 @@ public class BacktrackingSudokuSolver implements SudokuSolver {
         int topLeftCol = col - (col % 3);
         for (int i = topLeftRow; i < topLeftRow + 3; i++) {
             for (int j = topLeftCol; j < topLeftCol + 3; j++) {
-                if (sudokuBoard.getValue(i, j) == value) {
+                if (sudokuBoard.get(i, j) == value) {
                     return false;
                 }
             }

@@ -10,6 +10,9 @@ public class SudokuBoard {
 
     public SudokuBoard(SudokuSolver sudokuSolver) {
         board = new int[9][9];
+        if (sudokuSolver == null) {
+            throw new NullPointerException("SudokuBoard must be initialized");
+        }
         this.sudokuSolver = sudokuSolver;
         }
 
@@ -20,16 +23,17 @@ public class SudokuBoard {
         }
         return secondBoard;
     }
+    
 
     public void solveGame() {
         sudokuSolver.solve(this);
     }
 
-    public void setValue(int row, int col, int value) {
+    public void set(int row, int col, int value) {
         board[row][col] = value;
     }
 
-    public int getValue(int row, int col) {
+    public int get(int row, int col) {
         return board[row][col];
     }
 }
