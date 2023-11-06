@@ -1,28 +1,39 @@
 package org.example.models;
 
 import org.example.interfaces.SudokuSolver;
+import org.example.models.SudokuField;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public class SudokuBoard {
-    private int[][] board;
     private SudokuSolver sudokuSolver;
+    private ArrayList<SudokuField> sudokuFields = new ArrayList<>();
 
     public SudokuBoard(SudokuSolver sudokuSolver) {
-        board = new int[9][9];
         if (sudokuSolver == null) {
             throw new NullPointerException("SudokuBoard must be initialized");
         }
         this.sudokuSolver = sudokuSolver;
+
+        //initialization of empty board
+
+        for (int i = 0; i < 81; i ++) {
+            SudokuField emptyField = new SudokuField();
+            emptyField.setFieldValue(0);
+            sudokuFields.add(emptyField);
         }
+    }
 
     public int[][] getBoard() {
         int[][] secondBoard = new int[9][9];
-        for (int i = 0; i < 9; i++) {
-            secondBoard[i] = Arrays.copyOf(board[i], board[i].length);
+        for (int i = 0,  counter = 0; i < 9; i++) {
+            for(int j = 0; j < 9; j ++) {
+                secondBoard[i][j] = sudokuFields.get(counter).getFieldValue();
+                counter++;
+            }
         }
         return secondBoard;
-    }
+    } 
     
 
     public void solveGame() {
@@ -30,10 +41,24 @@ public class SudokuBoard {
     }
 
     public void set(int row, int col, int value) {
-        board[row][col] = value;
+       Integer fieldNumber = calculateFieldNumber(row, col);
+       sudokuFields.get(fieldNumber).setFieldValue(value);
     }
 
     public int get(int row, int col) {
-        return board[row][col];
+        Integer fieldNumber = calculateFieldNumber(row, col);
+        return sudokuFields.get(fieldNumber).getFieldValue();
+    }
+    
+     private boolean checkBoard() {
+        return true;
+    }
+
+   /*  public SudokuRow getRow(Integer y) {
+
+    } */
+
+    private Integer calculateFieldNumber(int row, int col) {
+        return 9 * row + col;
     }
 }
