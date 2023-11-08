@@ -1,5 +1,5 @@
 package org.example.models;
 
-public class SudokuRow {
-    
+public class SudokuRow extends SudokuValidator {
+
 }
