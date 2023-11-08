@@ -13,7 +13,7 @@ public class SudokuField {
 
     public void setFieldValue(Integer value) {
         if (value < 0 || value > 9) {
-            throw new NumberFormatException("Number must be in range 1-9 inclusive");
+            throw new NumberFormatException("Number must be in range 0-9 inclusive");
         }
         this.value = value;
     }
