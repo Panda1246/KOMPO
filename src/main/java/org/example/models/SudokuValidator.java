@@ -1,11 +1,13 @@
 package org.example.models;
 
+import java.util.Arrays;
+
 public class SudokuValidator {
     private static final int VALIDATOR_SIZE = 9;
     private SudokuField[] sudokuFields = new SudokuField[VALIDATOR_SIZE];
 
     public SudokuValidator() {
-        for(int i = 0; i < VALIDATOR_SIZE; i++) {
+        for (int i = 0; i < VALIDATOR_SIZE; i++) {
             SudokuField sudokuField = new SudokuField();
             sudokuFields[i] = sudokuField;
         }
@@ -37,13 +39,14 @@ public class SudokuValidator {
 
     public boolean verify() {
         int[] validatorFields = new int[VALIDATOR_SIZE];
+        Arrays.fill(validatorFields, -1);
         for (int i = 0; i < VALIDATOR_SIZE; i++) {
-            for (int element : validatorFields) {
-                if (element == sudokuFields[i].getFieldValue()) {
+            for (int j = 0; j < VALIDATOR_SIZE; j++) {
+                if (sudokuFields[i].getFieldValue() == validatorFields[j]) {
                     return false;
                 }
-            validatorFields[i] = sudokuFields[i].getFieldValue();
             }
+            validatorFields[i] = sudokuFields[i].getFieldValue();
         }
         return true;
     }

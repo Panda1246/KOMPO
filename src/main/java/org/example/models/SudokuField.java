@@ -7,6 +7,13 @@ public class SudokuField {
         this.value = 0;
     } 
 
+    public SudokuField(Integer value) {
+        if (value < 0 || value > 9) {
+            throw new NumberFormatException("Number must be in range 0-9 inclusive");
+        }
+        this.value = value;
+    }
+
     public Integer getFieldValue() {
         return value;
     }

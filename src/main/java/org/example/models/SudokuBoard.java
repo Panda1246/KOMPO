@@ -1,17 +1,15 @@
 package org.example.models;
 
 import org.example.interfaces.SudokuSolver;
-import org.example.models.SudokuField;
-import org.example.models.SudokuRow;
 
 public class SudokuBoard {
-    private final static int BOARD_SIZE = 9;
+    private static final int BOARD_SIZE = 9;
     private SudokuSolver sudokuSolver;
     private SudokuField[][] sudokuFields = new SudokuField[BOARD_SIZE][BOARD_SIZE];
 
     public SudokuBoard(SudokuSolver sudokuSolver) {
         if (sudokuSolver == null) {
-            throw new NullPointerException("SudokuBoard must be initialized");
+            throw new NullPointerException("SudokuSolver must be initialized");
         }
         this.sudokuSolver = sudokuSolver;
 
@@ -29,7 +27,7 @@ public class SudokuBoard {
     public int[][] getBoard() {
         int[][] secondBoard = new int[9][9];
         for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j ++) {
+            for (int j = 0; j < 9; j++) {
                 secondBoard[i][j] = sudokuFields[i][j].getFieldValue();
             }
         }
@@ -64,11 +62,11 @@ public class SudokuBoard {
 
     public SudokuBox getBox(int topLeftCol, int topLeftRow) {
         SudokuField[] sudokuBoxFields = new SudokuField[BOARD_SIZE];
-        for (int j = 0, counter=0; j < 3; j++) {
+        for (int j = 0, counter = 0; j < 3; j++) {
             for (int i = 0; i < 3; i++) {
                 sudokuBoxFields[counter] = sudokuFields[topLeftRow][topLeftCol];
-                sudokuBoxFields[counter+1] = sudokuFields[topLeftRow][topLeftCol+1];
-                sudokuBoxFields[counter+2] = sudokuFields[topLeftRow][topLeftCol+2];
+                sudokuBoxFields[counter + 1] = sudokuFields[topLeftRow][topLeftCol + 1];
+                sudokuBoxFields[counter + 2] = sudokuFields[topLeftRow][topLeftCol + 2];
             }
             topLeftRow += 1;
             counter += 3;
@@ -84,15 +82,15 @@ public class SudokuBoard {
             currentRow = getRow(i);
             currentColumn = getColumn(i);
             currentBox = getBox(boxCol, boxRow);
-            if ((i+1) % 3 == 0) {
+            if ((i + 1) % 3 == 0) {
                 boxCol = 0;
                 boxRow += 3;
             } else {
                 boxCol += 3;
             }
 
-            if (currentColumn.verify() == false || currentRow.verify() == false || 
-            currentBox.verify() == false) {
+            if (currentColumn.verify() == false || currentRow.verify() == false 
+            || currentBox.verify() == false) {
                 return false;
             }
         }

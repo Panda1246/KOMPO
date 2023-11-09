@@ -1,17 +1,28 @@
-package org.example;
+package org.example.models;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.example.models.SudokuField;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class SudokuFieldTest {
     SudokuField sudokuField = new SudokuField();
 
     @Test
-    void SudokuFieldConstructorTest() {
+    void sudokuFieldConstructorTest() {
         assertEquals(sudokuField.getFieldValue(), 0);
+    }
+
+    @Test
+    void sudokuFieldParameterConstructorTest() {
+        int randomField = ThreadLocalRandom.current().nextInt(1, 9);
+        SudokuField secondField = new SudokuField(randomField);
+        assertEquals(secondField.getFieldValue(), randomField);
+        assertThrows(NumberFormatException.class, 
+        () -> new SudokuField(29));
+        assertThrows(NumberFormatException.class, 
+        () -> new SudokuField(-1));
     }
 
     @Test
@@ -24,5 +35,7 @@ public class SudokuFieldTest {
         assertThrows(NumberFormatException.class, 
         () -> sudokuField.setFieldValue(10));
     }
+
+
     
 }

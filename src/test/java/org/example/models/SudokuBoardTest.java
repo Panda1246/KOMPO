@@ -1,8 +1,8 @@
-package org.example;
+package org.example.models;
 
 import org.example.interfaces.SudokuSolver;
-import org.example.models.SudokuBoard;
 import org.example.solvers.BacktrackingSudokuSolver;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SudokuBoardTest {
 
+    private static final int BOARD_SIZE = 9;
     SudokuSolver sudokuSolver = new BacktrackingSudokuSolver();
     SudokuBoard sudoku = new SudokuBoard(sudokuSolver);
     byte valueCounter = 0;
@@ -69,6 +70,54 @@ class SudokuBoardTest {
         );
     }
 
+    @Test
+    void getRowTest() {
+        sudoku.solveGame();
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            SudokuRow sudokuRow = sudoku.getRow(i);
+            for (int j = 0; j < BOARD_SIZE; j++) {
+                assertEquals(sudoku.get(i, j), sudokuRow.getFieldValue(j));
+            }
+        }
+    }
+
+    @Test
+    void getColumnTest() {
+        sudoku.solveGame();
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            SudokuColumn sudokuColumn = sudoku.getColumn(i);
+            for (int j = 0; j < BOARD_SIZE; j++) {
+                assertEquals(sudoku.get(j, i), sudokuColumn.getFieldValue(j));
+            }
+        }
+        //SudokuColumn sudokuColumn = new SudokuColumn(4)
+    }
+
+    @Test
+    void getBoxTest() {
+        sudoku.solveGame();
+        for (int i = 0, topLeftCol = 0, topLeftRow = 0; i < BOARD_SIZE; i++) {
+            SudokuBox sudkuBox = sudoku.getBox(topLeftCol, topLeftRow);
+            int startTopLeftRow = topLeftRow;
+            for(int j = 0; j < BOARD_SIZE; j++) {
+                assertEquals(sudoku.get(topLeftRow, topLeftCol), sudkuBox.getFieldValue(j));
+                topLeftCol++;
+                if ((j+1) % 3 == 0 && topLeftCol != 8) {
+                    topLeftCol = 0;
+                    topLeftRow += 1;
+                }
+            }
+            if(topLeftCol == 8) {
+                topLeftCol = 0;
+                topLeftRow = i + 1;
+                startTopLeftRow = i + 1;
+            }
+            else {
+                topLeftRow = startTopLeftRow;
+            }
+
+        }
+    }
 
 
     void checkRows(SudokuBoard sudokuBoard) {
